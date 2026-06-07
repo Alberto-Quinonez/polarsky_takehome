@@ -1,0 +1,10 @@
+# compiled binary
+quote-finder
+
+# test coverage
+coverage.out
+
+# IDE
+.idea/
+.history/
+*.swp

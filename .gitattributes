@@ -1,0 +1,7 @@
+# Force LF line endings for files that must not have CRLF
+*.go        text eol=lf
+Dockerfile  text eol=lf
+Makefile    text eol=lf
+*.json      text eol=lf
+*.md        text eol=lf
+.dockerignore text eol=lf

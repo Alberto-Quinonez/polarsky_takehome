@@ -1,0 +1,105 @@
+{
+  "query": "I need motivation to keep going when things are tough",
+  "quotes": [
+    {
+      "text": "Just keep swimming.",
+      "movie": "Finding Nemo",
+      "character": "Dory"
+    },
+    {
+      "text": "After all, tomorrow is another day!",
+      "movie": "Gone with the Wind",
+      "character": "Scarlett O'Hara"
+    },
+    {
+      "text": "I'm going to make him an offer he can't refuse.",
+      "movie": "The Godfather",
+      "character": "Don Vito Corleone"
+    },
+    {
+      "text": "Life is like a box of chocolates. You never know what you're gonna get.",
+      "movie": "Forrest Gump",
+      "character": "Forrest Gump"
+    },
+    {
+      "text": "You can't handle the truth!",
+      "movie": "A Few Good Men",
+      "character": "Col. Jessep"
+    },
+    {
+      "text": "May the Force be with you.",
+      "movie": "Star Wars",
+      "character": "Various"
+    },
+    {
+      "text": "There's no place like home.",
+      "movie": "The Wizard of Oz",
+      "character": "Dorothy"
+    },
+    {
+      "text": "I'll be back.",
+      "movie": "The Terminator",
+      "character": "The Terminator"
+    },
+    {
+      "text": "Houston, we have a problem.",
+      "movie": "Apollo 13",
+      "character": "Jim Lovell"
+    },
+    {
+      "text": "You're gonna need a bigger boat.",
+      "movie": "Jaws",
+      "character": "Chief Brody"
+    },
+    {
+      "text": "The first rule of Fight Club is: You do not talk about Fight Club.",
+      "movie": "Fight Club",
+      "character": "Tyler Durden"
+    },
+    {
+      "text": "Why so serious?",
+      "movie": "The Dark Knight",
+      "character": "Joker"
+    },
+    {
+      "text": "You had me at hello.",
+      "movie": "Jerry Maguire",
+      "character": "Dorothy Boyd"
+    },
+    {
+      "text": "To infinity and beyond!",
+      "movie": "Toy Story",
+      "character": "Buzz Lightyear"
+    },
+    {
+      "text": "Life moves pretty fast. If you don't stop and look around once in a while, you could miss it.",
+      "movie": "Ferris Bueller's Day Off",
+      "character": "Ferris Bueller"
+    },
+    {
+      "text": "Nobody puts Baby in a corner.",
+      "movie": "Dirty Dancing",
+      "character": "Johnny Castle"
+    },
+    {
+      "text": "It's not who I am underneath, but what I do that defines me.",
+      "movie": "Batman Begins",
+      "character": "Batman"
+    },
+    {
+      "text": "Our lives are defined by opportunities, even the ones we miss.",
+      "movie": "The Curious Case of Benjamin Button",
+      "character": "Benjamin Button"
+    },
+    {
+      "text": "Get busy living, or get busy dying.",
+      "movie": "The Shawshank Redemption",
+      "character": "Andy Dufresne"
+    },
+    {
+      "text": "The only way out is through.",
+      "movie": "The Grey",
+      "character": "John Ottway"
+    }
+  ]
+}
