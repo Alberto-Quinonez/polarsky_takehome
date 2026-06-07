@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -19,6 +20,24 @@ type Quote struct {
 	Text      string `json:"text"`
 	Movie     string `json:"movie"`
 	Character string `json:"character"`
+}
+
+// Loader loads a query and quote list from a source.
+// The source interpretation is implementation-specific — a file path today,
+// a quote-set ID when backed by a database.
+type Loader interface {
+	Load(ctx context.Context, source string) (*Input, error)
+}
+
+// jsonFileLoader implements Loader by reading a JSON file from disk.
+type jsonFileLoader struct{}
+
+func NewLoader() Loader {
+	return &jsonFileLoader{}
+}
+
+func (l *jsonFileLoader) Load(_ context.Context, path string) (*Input, error) {
+	return loadInput(path)
 }
 
 func loadInput(path string) (*Input, error) {

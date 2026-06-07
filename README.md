@@ -324,6 +324,8 @@ Mental wellness apps have high query clustering — users' emotional states foll
 
 **Phase 3 — DB-backed quote sets + embeddings**
 
+The `Loader` interface in `loader.go` is the exact swap point for this phase. Today `NewLoader()` returns a `jsonFileLoader` that reads from disk; replacing it with a `dbLoader` (accepting a `*sql.DB` and resolving a quote-set ID) requires no changes to `main.go` or any business logic.
+
 Replace the flat `quotes.json` with Postgres + `pgvector`:
 
 ```sql
@@ -331,15 +333,11 @@ quote_sets (id, name, created_at)
 quotes     (id, set_id, text, movie, character, embedding vector(1536))
 ```
 
-Pre-compute embeddings at insert time. At query time: vector similarity search for top-N candidates → LLM re-ranks for emotional nuance. This decouples fast retrieval (DB-side) from precise ranking (LLM-side), cutting LLM calls by 80%+ on large quote sets.
-
-The current `quotes.json` has 20 hand-picked quotes. With a real DB, seed it from open-source datasets to reach meaningful scale:
+Pre-compute embeddings at insert time. At query time: vector similarity search for top-N candidates → LLM re-ranks for emotional nuance. This decouples fast retrieval (DB-side) from precise ranking (LLM-side), cutting LLM calls by 80%+ on large quote sets. Seed from open-source datasets for meaningful scale:
 
 - **Cornell Movie Dialogs Corpus** — 220,000+ conversational exchanges from 617 films
-- **Kaggle Movie Quotes** — curated quote collections with metadata (character, genre, year)
+- **Kaggle Movie Quotes** — curated collections with metadata (character, genre, year)
 - **HuggingFace `movie_quotes`** — ready-to-load datasets with embeddings precomputed for some splits
-
-A one-time ingestion script loads the dataset, computes embeddings via the same LLM endpoint, and bulk-inserts into the `quotes` table. From that point the ranking pipeline is unchanged — the vector search just has a much richer pool to draw from.
 
 **Phase 4 — Async + queue for burst traffic**
 
