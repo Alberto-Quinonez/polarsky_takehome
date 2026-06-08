@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"sort"
 	"time"
 )
@@ -175,7 +176,9 @@ func (r *openAIRanker) Rank(ctx context.Context, query string, quotes []Quote) (
 		}
 	}
 	if len(grounded) == 0 {
-		return nil, fmt.Errorf("LLM returned no rankings matching input quotes")
+		// Model hallucinated quotes not in the input list — fall back to local BM25.
+		fmt.Fprintf(os.Stderr, "warning: LLM returned no matching quotes, falling back to local ranking\n")
+		return NewLocalRanker().Rank(ctx, query, quotes)
 	}
 
 	// Sort client-side for defensive correctness — LLM should already return sorted.
