@@ -35,6 +35,10 @@ func execute(cfg *Config, ranker Ranker, input *Input) error {
 	}
 
 	rankings, err := ranker.Rank(context.Background(), query, input.Quotes)
+	if err != nil && cfg.Mode != ModeLocal {
+		fmt.Fprintf(os.Stderr, "warning: %v — falling back to local ranking\n", err)
+		rankings, err = NewLocalRanker().Rank(context.Background(), query, input.Quotes)
+	}
 	if err != nil {
 		return fmt.Errorf("ranking quotes: %w", err)
 	}

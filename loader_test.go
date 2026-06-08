@@ -226,16 +226,40 @@ func TestExecute_QueryOverride(t *testing.T) {
 }
 
 func TestExecute_RankerError(t *testing.T) {
-	cfg := &Config{TopN: 3}
+	cfg := &Config{TopN: 3, Mode: ModeLocal}
 	input := &Input{Query: "q", Quotes: []Quote{{Text: "t", Movie: "m", Character: "c"}}}
 	ranker := &mockRanker{err: fmt.Errorf("LLM unavailable")}
 
 	err := execute(cfg, ranker, input)
 	if err == nil {
-		t.Error("expected error when ranker fails")
+		t.Error("expected error when ranker fails in local mode")
 	}
 	if !strings.Contains(err.Error(), "LLM unavailable") {
 		t.Errorf("error = %v, want to contain 'LLM unavailable'", err)
+	}
+}
+
+func TestExecute_FallsBackToLocalOnError(t *testing.T) {
+	// Non-local mode ranker that always fails — should fall back to BM25 and produce results.
+	cfg := &Config{TopN: 3, Mode: ModeLlama}
+	input := &Input{
+		Query: "keep swimming",
+		Quotes: []Quote{
+			{Text: "Just keep swimming.", Movie: "Finding Nemo", Character: "Dory"},
+			{Text: "Why so serious?", Movie: "The Dark Knight", Character: "Joker"},
+		},
+	}
+	ranker := &mockRanker{err: fmt.Errorf("connection refused")}
+
+	output := captureStdout(t, func() {
+		err := execute(cfg, ranker, input)
+		if err != nil {
+			t.Errorf("expected fallback to succeed, got error: %v", err)
+		}
+	})
+
+	if !strings.Contains(output, "Finding Nemo") {
+		t.Error("fallback output should contain BM25 result")
 	}
 }
 

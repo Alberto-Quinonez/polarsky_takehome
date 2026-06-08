@@ -100,6 +100,13 @@ _What happened:_ Claude added Phase 6 to the "What I'd Do Next" section covering
 
 ---
 
+**Prompt 12 — Resilience: fallback to local ranking on API failure**
+> "what about anything similar to the previous error we just found? anywhere else that can be made a bit more bulletproof by falling back on the local ranker?"
+
+_What happened:_ Claude identified two failure modes not yet covered: the LLM/embed API failing entirely (network error, Ollama down, timeout), and the existing hallucination fallback only living inside `openAIRanker`. Added a second fallback layer in `execute()` in `main.go` — if the primary ranker errors and the mode is not local, it warns to stderr and retries with BM25. Local mode is unaffected. A test was added to verify the fallback produces valid output when the ranker fails.
+
+---
+
 **Key iteration on the LLM prompt itself:**
 
 My first system prompt asked the model to return only the top 3. Claude suggested changing it to rank _all_ quotes and slice top 3 client-side — the model produces more calibrated relative scores when it sees the full distribution. This was the right call.
